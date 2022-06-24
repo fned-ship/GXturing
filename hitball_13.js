@@ -49,12 +49,12 @@ var orientLL=false;
 var orientLLL=false;
 var Pause=false;
 var showenter=false;
+Pause
 var BALL_RADIUS=6.7;//+++++++++++++++++++++++++++++++6.7
 var dmbr=12.1;//++++++++++++++++++++++++12.1
 var BALLSPEED=7; //6//9//-++- 16//88//--82+++++++++++++++++++++++++++
 var gadget="pc"
 var user="computer"
-var cvsHeight=500;
 if ( /android|webOS|iPhone|iPad|iPod|blackberry|IEMobile|Opera Mini|Windows Phone/i.test(navigator.userAgent) ){//phone and ipad
         user="phone"
         if(window.screen.width>280){
@@ -104,8 +104,6 @@ if ( /android|webOS|iPhone|iPad|iPod|blackberry|IEMobile|Opera Mini|Windows Phon
                     if( windowWidth<600 ){
                         cvs.width=`${windowWidth}`;
                         cvs.height=`${windowHeight}`;
-                        cvsHeight=windowHeight * 0.92 ;//++++
-                        console.log("cvs.height"+cvs.height);
                         cvs.style.position="absolute"
                         cvs.style.top= "0px"
                         cvs.style.left = "50%"
@@ -128,8 +126,6 @@ if ( /android|webOS|iPhone|iPad|iPod|blackberry|IEMobile|Opera Mini|Windows Phon
                         if(windowHeight>512){
                             cvs.width=`${windowWidth * 1}`;//0.35//0.9//++0.75
                             cvs.height=`${windowHeight * 0.5}`;//0.75//0.8//++0.6
-                            cvsHeight=windowHeight * 0.5 ;//++++
-
                             cvs.style.position="absolute"
                             cvs.style.top= "50%"
                             cvs.style.left = "50%"
@@ -149,8 +145,6 @@ if ( /android|webOS|iPhone|iPad|iPod|blackberry|IEMobile|Opera Mini|Windows Phon
                         }else{
                             cvs.width=`${windowWidth}`;
                             cvs.height=`${windowHeight}`;
-                            cvsHeight=windowHeight * 0.95 ;//++++
-
                             cvs.style.position="absolute"
                             cvs.style.top= "0px"
                             cvs.style.left = "50%"
@@ -204,8 +198,6 @@ if ( /android|webOS|iPhone|iPad|iPod|blackberry|IEMobile|Opera Mini|Windows Phon
 }else{ //computer
     cvs.width=`${windowWidth * 0.35}`;//0.35//0.9
     cvs.height=`${windowHeight * 0.75}`;//0.75//0.8
-    cvsHeight=windowHeight * 0.75;//++++
-
     cvs.style.position="absolute"
     cvs.style.top= "50%"
     cvs.style.left = "50%"
@@ -496,14 +488,26 @@ function resultcourbe(xa,ya,xb,yb,xm,ym,r){
 
 
 
-//........................................................./ CREATE THE PADDLE
-let paddle = {
-    x : cvs.width/2 - PADDLE_WIDTH/2,
-    x0:cvs.width/2 - PADDLE_WIDTH/2,
-    y : cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT,
-    width : PADDLE_WIDTH,
-    height : PADDLE_HEIGHT,
-    dx :cvs.width/40 //5
+//........................................................./ CREATE THE 
+let paddle={};
+if(user==="phone"){
+    paddle = {
+        x : cvs.width/2 - PADDLE_WIDTH/2,
+        x0:cvs.width/2 - PADDLE_WIDTH/2,
+        y : cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT,
+        width : PADDLE_WIDTH,
+        height : PADDLE_HEIGHT,
+        dx :cvs.width/40 //5
+    }
+}else{
+    paddle = {
+        x : cvs.width/2 - PADDLE_WIDTH/2,
+        x0:cvs.width/2 - PADDLE_WIDTH/2,
+        y : cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT,
+        width : PADDLE_WIDTH,
+        height : PADDLE_HEIGHT,
+        dx :cvs.width/40 //5
+    }
 }
 const line = {
     x : 10,
@@ -744,13 +748,7 @@ function ballWallCollision(){
         balls[0].bwcs=true
     }
 
-    if(balls[0].y + balls[0].radius > cvsHeight){
-        // console.log("-- ball_y , paddle_y , cvs.height , cvsHeight --");
-        // console.log(balls[0].y);
-        // console.log(paddle.y);
-        // console.log(cvs.height);
-        // console.log(cvsHeight);
-        // console.log("------------------------");
+    if(balls[0].y + balls[0].radius > cvs.height){
         LIFE--; // LOSE LIFE
         LIFE_LOST.play();
         resetBall();
@@ -1350,12 +1348,6 @@ function draw(){
 //.........................................................../game over
 function gameOver(){
     if(LIFE <= 0){
-        // console.log("---- life , level , cvsheight ----");
-        // console.log(LIFE);
-        // console.log(LEVEL);
-        // console.log(cvsHeight);
-        // console.log("----------------------------------");
-
         showYouLose();
         GAME_OVER = true;
         document.getElementById("restart").style.display="block"
@@ -1397,17 +1389,25 @@ function levelUp(){
         }
 
         if(LEVEL==0){
-            createBricks(Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3),Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+dmbr,dmbr/2)
+            if(user==="phone"){
+                createBricks(Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3),Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+dmbr,dmbr/2)
+            }else{
+                createBricks(Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3),Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+dmbr,dmbr/2)
+            }
             setLevel("0");
             localStorage.setItem("level","0");
             setBorn("20");
             localStorage.setItem("born","20");
-            console.log("height"+cvsHeight);
         }else if(LEVEL==1){
             norb=numberofrows
             nob=num_of_balls
-            createBricks(Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3),Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+dmbr,dmbr/2)
-            createBrickswall(1,1,0,dmbr*3,0,Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)*(dmbr+dmbr/4)+50+8*dmbr+dmbr,cvs.width-dmbr*6,4,false)
+            if(user==="phone"){
+                createBricks(Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3),Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+dmbr,dmbr/2)
+                createBrickswall(1,1,0,dmbr*3,0,Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)*(dmbr+dmbr/4)+50+8*dmbr+dmbr,cvs.width-dmbr*6,4,false)
+            }else{
+                createBricks(Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3),Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+dmbr,dmbr/2)
+                createBrickswall(1,1,0,dmbr*3,0,Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)*(dmbr+dmbr/4)+50+8*dmbr+dmbr,cvs.width-dmbr*6,4,false)
+            }
             setLevel("1");
             localStorage.setItem("level","1");
             setBorn("20");
@@ -1416,10 +1416,17 @@ function levelUp(){
             norb=numberofrows
             nob=num_of_balls
             r01=0
-            createBricks(Math.floor((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8,Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50,dmbr/2)
+            if(user==="user"){
+                createBricks(Math.floor((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8,Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50,dmbr/2)
 
-            createBrickswall(1,1,cvs.width/3,0,dmbr,(Math.floor((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8)*(dmbr+dmbr/4)+50+5+dmbr,cvs.width/3,4,false);
-            createBrickswall(1,1,cvs.width/3,2*cvs.width/3,dmbr,(Math.floor((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8)*(dmbr+dmbr/4)+50+4+dmbr+5+dmbr*2,cvs.width/3,4,false);
+                createBrickswall(1,1,cvs.width/3,0,dmbr,(Math.floor((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8)*(dmbr+dmbr/4)+50+5+dmbr,cvs.width/3,4,false);
+                createBrickswall(1,1,cvs.width/3,2*cvs.width/3,dmbr,(Math.floor((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8)*(dmbr+dmbr/4)+50+4+dmbr+5+dmbr*2,cvs.width/3,4,false);
+            }else{
+                createBricks(Math.floor((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8,Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50,dmbr/2)
+
+                createBrickswall(1,1,cvs.width/3,0,dmbr,(Math.floor((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8)*(dmbr+dmbr/4)+50+5+dmbr,cvs.width/3,4,false);
+                createBrickswall(1,1,cvs.width/3,2*cvs.width/3,dmbr,(Math.floor((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8)*(dmbr+dmbr/4)+50+4+dmbr+5+dmbr*2,cvs.width/3,4,false);
+            }
 
             setLevel("2");
             localStorage.setItem("level","2");
@@ -1432,17 +1439,31 @@ function levelUp(){
             norb=numberofrows
             nob=num_of_balls
             r01=0
-            createBricks(Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3,Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+dmbr,dmbr/2)
-            createBricks(Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3,Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+(Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)+20+dmbr,dmbr/2)
-            createBricks(Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3,Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+(Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)*2+40+dmbr,dmbr/2)
+            if(user==="phone"){
+                createBricks(Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3,Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+dmbr,dmbr/2)
+                createBricks(Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3,Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+(Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)+20+dmbr,dmbr/2)
+                createBricks(Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3,Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+(Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)*2+40+dmbr,dmbr/2)
 
-            createBrickswall(1,1,cvs.width/3,0,0,(Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)+50+5+dmbr,cvs.width/3,4,false);
-            createBrickswall(1,1,cvs.width/3,0,0,(Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)*2+20+50+5+dmbr,cvs.width/3,4,false);
-            createBrickswall(1,1,cvs.width/3,0,0,(Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)*3+40+50+5+dmbr,cvs.width/3,4,false);
+                createBrickswall(1,1,cvs.width/3,0,0,(Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)+50+5+dmbr,cvs.width/3,4,false);
+                createBrickswall(1,1,cvs.width/3,0,0,(Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)*2+20+50+5+dmbr,cvs.width/3,4,false);
+                createBrickswall(1,1,cvs.width/3,0,0,(Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)*3+40+50+5+dmbr,cvs.width/3,4,false);
 
-            createBrickswall(1,1,0,2*cvs.width/3,0,(Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)+50+5+10+dmbr,cvs.width/3,4,false);
-            createBrickswall(1,1,0,2*cvs.width/3,0,(Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)*2+20+50+5+10+dmbr,cvs.width/3,4,false);
-            createBrickswall(1,1,0,2*cvs.width/3,0,(Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)*3+40+50+5+10+dmbr,cvs.width/3,4,false);
+                createBrickswall(1,1,0,2*cvs.width/3,0,(Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)+50+5+10+dmbr,cvs.width/3,4,false);
+                createBrickswall(1,1,0,2*cvs.width/3,0,(Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)*2+20+50+5+10+dmbr,cvs.width/3,4,false);
+                createBrickswall(1,1,0,2*cvs.width/3,0,(Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)*3+40+50+5+10+dmbr,cvs.width/3,4,false);
+            }else{
+                createBricks(Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3,Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+dmbr,dmbr/2)
+                createBricks(Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3,Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+(Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)+20+dmbr,dmbr/2)
+                createBricks(Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3,Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+(Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)*2+40+dmbr,dmbr/2)
+
+                createBrickswall(1,1,cvs.width/3,0,0,(Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)+50+5+dmbr,cvs.width/3,4,false);
+                createBrickswall(1,1,cvs.width/3,0,0,(Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)*2+20+50+5+dmbr,cvs.width/3,4,false);
+                createBrickswall(1,1,cvs.width/3,0,0,(Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)*3+40+50+5+dmbr,cvs.width/3,4,false);
+
+                createBrickswall(1,1,0,2*cvs.width/3,0,(Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)+50+5+10+dmbr,cvs.width/3,4,false);
+                createBrickswall(1,1,0,2*cvs.width/3,0,(Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)*2+20+50+5+10+dmbr,cvs.width/3,4,false);
+                createBrickswall(1,1,0,2*cvs.width/3,0,(Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)-3)*(dmbr+dmbr/4)*3+40+50+5+10+dmbr,cvs.width/3,4,false);
+            }
             
             setLevel("3");
             localStorage.setItem("level","3");
@@ -1453,11 +1474,19 @@ function levelUp(){
             norb=numberofrows
             nob=num_of_balls
             r01=0
-            createBricks(Math.floor((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8,Math.floor((cvs.width)/(dmbr+dmbr/4)-4),dmbr-dmbr/4,(dmbr+dmbr/4)*2,dmbr-dmbr/4,(dmbr+dmbr/4)*2+50,dmbr/2)
+            if(user==="phone"){
+                createBricks(Math.floor((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8,Math.floor((cvs.width)/(dmbr+dmbr/4)-4),dmbr-dmbr/4,(dmbr+dmbr/4)*2,dmbr-dmbr/4,(dmbr+dmbr/4)*2+50,dmbr/2)
 
-            createBrickswall(1,2,(Math.floor((cvs.width)/(dmbr+dmbr/4)-4))*(dmbr+dmbr/4)+5,(dmbr+dmbr/4)*2-4,0,(dmbr+dmbr/4)*2+50-5,4,(Math.floor((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8)*(dmbr+dmbr/4)+4+7,true)
-            createBrickswall(1,1,cvs.width/3,(dmbr+dmbr/4)*2-4,6,(Math.floor((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8)*(dmbr+dmbr/4)+50+5+(dmbr+dmbr/4)*2,(Math.floor((cvs.width)/(dmbr+dmbr/4)-4))*(dmbr+dmbr/4)+13,4,false)
-            createBrickswall(1,2,((Math.floor((cvs.width)/(dmbr+dmbr/4)-4))*(dmbr+dmbr/4))/3,(dmbr+dmbr/4)*2-4,0,(dmbr+dmbr/4)*2+50-9,((Math.floor((cvs.width)/(dmbr+dmbr/4)-4))*(dmbr+dmbr/4))/3+6+0.5,4,false)
+                createBrickswall(1,2,(Math.floor((cvs.width)/(dmbr+dmbr/4)-4))*(dmbr+dmbr/4)+5,(dmbr+dmbr/4)*2-4,0,(dmbr+dmbr/4)*2+50-5,4,(Math.floor((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8)*(dmbr+dmbr/4)+4+7,true)
+                createBrickswall(1,1,cvs.width/3,(dmbr+dmbr/4)*2-4,6,(Math.floor((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8)*(dmbr+dmbr/4)+50+5+(dmbr+dmbr/4)*2,(Math.floor((cvs.width)/(dmbr+dmbr/4)-4))*(dmbr+dmbr/4)+13,4,false)
+                createBrickswall(1,2,((Math.floor((cvs.width)/(dmbr+dmbr/4)-4))*(dmbr+dmbr/4))/3,(dmbr+dmbr/4)*2-4,0,(dmbr+dmbr/4)*2+50-9,((Math.floor((cvs.width)/(dmbr+dmbr/4)-4))*(dmbr+dmbr/4))/3+6+0.5,4,false)
+            }else{
+                createBricks(Math.floor((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8,Math.floor((cvs.width)/(dmbr+dmbr/4)-4),dmbr-dmbr/4,(dmbr+dmbr/4)*2,dmbr-dmbr/4,(dmbr+dmbr/4)*2+50,dmbr/2)
+
+                createBrickswall(1,2,(Math.floor((cvs.width)/(dmbr+dmbr/4)-4))*(dmbr+dmbr/4)+5,(dmbr+dmbr/4)*2-4,0,(dmbr+dmbr/4)*2+50-5,4,(Math.floor((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8)*(dmbr+dmbr/4)+4+7,true)
+                createBrickswall(1,1,cvs.width/3,(dmbr+dmbr/4)*2-4,6,(Math.floor((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))-8)*(dmbr+dmbr/4)+50+5+(dmbr+dmbr/4)*2,(Math.floor((cvs.width)/(dmbr+dmbr/4)-4))*(dmbr+dmbr/4)+13,4,false)
+                createBrickswall(1,2,((Math.floor((cvs.width)/(dmbr+dmbr/4)-4))*(dmbr+dmbr/4))/3,(dmbr+dmbr/4)*2-4,0,(dmbr+dmbr/4)*2+50-9,((Math.floor((cvs.width)/(dmbr+dmbr/4)-4))*(dmbr+dmbr/4))/3+6+0.5,4,false)
+            }
             for(var i=3;i<brickswall.length;i++){
                 delete brickswall[i][0];
             }
@@ -1471,10 +1500,17 @@ function levelUp(){
             norb=numberofrows
             nob=num_of_balls
             r01=0
-            createBricks(Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3),Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+dmbr,dmbr/2)
-            createBrickswall(1,1,0,0,0,Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)*(dmbr+dmbr/4)+50+8*dmbr,cvs.width-dmbr*2,4,false)
-            createBrickswall(1,1,0,dmbr*2,0,Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)*(dmbr+dmbr/4)+50+10*dmbr,cvs.width-dmbr*2,4,false)
-            createBrickswall(1,1,0,0,0,Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)*(dmbr+dmbr/4)+50+12*dmbr,cvs.width-dmbr*2,4,false)
+            if(user==="phone"){
+                createBricks(Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3),Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+dmbr,dmbr/2)
+                createBrickswall(1,1,0,0,0,Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)*(dmbr+dmbr/4)+50+8*dmbr,cvs.width-dmbr*2,4,false)
+                createBrickswall(1,1,0,dmbr*2,0,Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)*(dmbr+dmbr/4)+50+10*dmbr,cvs.width-dmbr*2,4,false)
+                createBrickswall(1,1,0,0,0,Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)*(dmbr+dmbr/4)+50+12*dmbr,cvs.width-dmbr*2,4,false)
+            }else{
+                createBricks(Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3),Math.floor((cvs.width)/(dmbr+dmbr/4)),dmbr-dmbr/4,(cvs.width - Math.floor((cvs.width)/(dmbr+dmbr/4))*(dmbr+dmbr/4)-dmbr/4)/2,dmbr-dmbr/4,50+dmbr,dmbr/2)
+                createBrickswall(1,1,0,0,0,Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)*(dmbr+dmbr/4)+50+8*dmbr,cvs.width-dmbr*2,4,false)
+                createBrickswall(1,1,0,dmbr*2,0,Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)*(dmbr+dmbr/4)+50+10*dmbr,cvs.width-dmbr*2,4,false)
+                createBrickswall(1,1,0,0,0,Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)*(dmbr+dmbr/4)+50+12*dmbr,cvs.width-dmbr*2,4,false)
+            }
             
             setLevel("5");
             localStorage.setItem("level","5");
@@ -1674,13 +1710,26 @@ function check(){
         ylose.style.width=`${2*cvs.width/3}px`
     }
 
-    if(paddle.y!=cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT ){
-        paddle.y=cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT
-    }
-    if(LEVEL==1 && vrb>3 && Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)<bricks.length ){
-        for( var j=0 ; j< bricks.length -  Math.floor(((cvsHeight - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3) ; j++ ){
-            for(var i=0;i<bricks[j].length;i++){
-                bricks[j][i].status=false
+    if(user==="phone"){
+        if(paddle.y!=cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT ){
+            paddle.y=cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT
+        }
+        if(LEVEL==1 && vrb>3 && Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)<bricks.length ){
+            for( var j=0 ; j< bricks.length -  Math.floor(((cvs.height*0.92 - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3) ; j++ ){
+                for(var i=0;i<bricks[j].length;i++){
+                    bricks[j][i].status=false
+                }
+            }
+        }
+    }else{
+        if(paddle.y!=cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT ){
+            paddle.y=cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT
+        }
+        if(LEVEL==1 && vrb>3 && Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3)<bricks.length ){
+            for( var j=0 ; j< bricks.length -  Math.floor(((cvs.height - PADDLE_MARGIN_BOTTOM - PADDLE_HEIGHT-50)/(dmbr+dmbr/4))/3) ; j++ ){
+                for(var i=0;i<bricks[j].length;i++){
+                    bricks[j][i].status=false
+                }
             }
         }
     }
