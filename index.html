@@ -142,15 +142,19 @@
         }
         #a{
             margin-top:30px;
+            font-weight: 500;
         }
         #a1{
             margin-top: 30px;
+            font-weight: 200;
         }
         #a2{
             margin-top:10px;
+            font-weight: 200;
         }
         #a3{
             margin-top:30px;
+            font-weight: 500;
         }
         .content a{
             position: relative;
@@ -160,7 +164,7 @@
             background:black;
             border-radius: 25px;
 
-            font-weight: 500;
+            /*font-weight: 500;*/
             /*font-size: 1.5em;*/
 
             text-transform: uppercase;
@@ -443,8 +447,8 @@ if ( /android|webOS|iPhone|iPad|iPod|blackberry|IEMobile|Opera Mini|Windows Phon
     }
     GX.style.width="350px"
     a.style.fontSize="1.25em"
-    a1.style.fontSize="1.25em"
-    a2.style.fontSize="1.25em"
+    a1.style.fontSize=`${windowWidth/4*0.05}px`
+    a2.style.fontSize=`${windowWidth/4*0.05}px`
     a3.style.fontSize="1.25em"
 }
 
