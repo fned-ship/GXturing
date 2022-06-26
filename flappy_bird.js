@@ -151,7 +151,7 @@ if ( /android|webOS|iPhone|iPad|iPod|blackberry|IEMobile|Opera Mini|Windows Phon
     }
     onload = new Orientation();
 }else{ //computer
-    document.documentElement.style.setProperty('--gx-height', '45px');
+    //document.documentElement.style.setProperty('--gx-height', '45px');
     document.documentElement.style.setProperty('--gx-pdg', '50px');
     document.documentElement.style.setProperty('--gx-font', '30px');
 
