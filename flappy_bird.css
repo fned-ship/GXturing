@@ -7,9 +7,9 @@
     --block-R:400px;
     --block-L:-50px;
 
-    --gx-height:45px;
+    --gx-height:5vh;
     --gx-pdg:50px;
-    --gx-font:30px;
+    --gx-font:28px;
 }
 body{
     background:#34060f;/* #162052 */
@@ -149,13 +149,14 @@ body{
     transform:translateX(-50%);
     z-index:25;
     width:350px;
-    height:45px;
+    height:5vh;
     background-color: black;
     -webkit-clip-path: polygon(0% 0%, 100% 0%, calc(100% - 50px) 100%, 50px 100%);
     display: none;
 }
 #GXX{
     color:#816a6a;
+    font-size: 28px;
 }
 /*******************************************/
 #bar{
@@ -224,10 +225,10 @@ section{
     0 0 80px #cc0000,
     0 0 100px #cc0000;
     transform:scale(0.1);
-    animation: animate 4s linear infinite;
+    animation: animate1 4s linear infinite;
     animation-delay:calc(0.1s * var(--i));
   }
-  @keyframes animate{
+  @keyframes animate1{
     0%{
         transform:scale(1);
     }
