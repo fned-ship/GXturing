@@ -2,7 +2,7 @@
 var  windowWidth=window.screen.width ;//* window.devicePixelRatio ;
 var  windowHeight=window.screen.height ;//* window.devicePixelRatio ;
 var  orientLL=false;
-var  user="computer" 
+var  user="other" 
 const whiteBoard=document.getElementById("white_board");
 const rotate=document.getElementById("rotate");
 const GX=document.getElementById("GX");
@@ -68,6 +68,7 @@ if ( /android|webOS|iPhone|iPad|iPod|blackberry|IEMobile|Opera Mini|Windows Phon
     }
     onload = new Orientation();
 }else{ //computer
+    user="computer"
     document.documentElement.style.setProperty('--cell-size', '110px');
 
     document.documentElement.style.setProperty('--gx-height', '45px');
@@ -79,7 +80,71 @@ if ( /android|webOS|iPhone|iPad|iPod|blackberry|IEMobile|Opera Mini|Windows Phon
     bar.style.display="flex"
     bar.style.width="350px"
 }
+//-----------------------------------------------------  other  ---------------------------------------------------------
+var vrb=true
+var cntr0=0;
+function Orientation(){
+    cntr0+=1
+    if(window.screen.width<window.screen.height && cntr0==1 ){
+        vrb=true
+    }else if( window.screen.width>=window.screen.height && cntr0==1 ){
+        vrb=false
+    }
 
+    if( window.screen.width<window.screen.height && vrb ){
+        vrb=false
+        orientLL=false;
+                if( window.screen.width>window.screen.height ){
+                    document.documentElement.style.setProperty('--cell-size', `${window.screen.height/3-50}px`);
+                }else{
+                    document.documentElement.style.setProperty('--cell-size', `${window.screen.width/3-10}px`);
+                    GX.style.display="flex"
+                    bar.style.display="flex"
+                }
+                whiteBoard.style.display="none"
+                rotate.style.display="none"
+    }else if( window.screen.width>=window.screen.height && vrb==false  ){
+        vrb=true
+        orientLL=true;
+                if(window.screen.height>=800){
+                    document.documentElement.style.setProperty('--cell-size', `${window.screen.height/3-100}px`);
+                    GX.style.display="flex"
+                    bar.style.display="flex"
+                }else{
+                    whiteBoard.style.display="block"
+                    GX.style.display="none"
+                    bar.style.display="none"
+                    rotate.style.display="block"
+                    rotate.style.width="100px"
+                    rotate.style.position="absolute"
+                    rotate.style.top= "50%"
+                    rotate.style.left = "50%"
+                    rotate.style.transform="translate(-50%,-50%)"
+                }
+    }
+}
+function loopOrientation(){
+    
+    Orientation();
+
+    requestAnimationFrame(loopOrientation);
+}
+if(user==="other"){// iphone and phones
+    if( window.screen.width<600 ){
+        GX.style.width="80%"
+        bar.style.width="80%"
+    }else{
+        GX.style.width="350px"
+        bar.style.width="350px"
+    } 
+
+    if(window.screen.width<=300){
+        document.documentElement.style.setProperty('--gx-height', '30px');
+        document.documentElement.style.setProperty('--gx-pdg', '40px');
+        document.documentElement.style.setProperty('--gx-font', '18px');
+    }
+    loopOrientation();
+}
 //galaxy fold
 
 function check(){
