@@ -23,133 +23,133 @@ var blockW,blockH,gameW,gameH,holeW,holeH,characterW,characterH;
 
 if ( /android|webOS|iPhone|iPad|iPod|blackberry|IEMobile|Opera Mini|Windows Phone/i.test(navigator.userAgent) ){//phone and ipad
     user="phone"
-    // if( window.screen.width<600 ){
-    //     bar.style.width="80%"
-    // }else{
-    //     bar.style.width="350px"
-    // }
+    if( window.screen.width<600 ){
+        bar.style.width="80%"
+    }else{
+        bar.style.width="350px"
+    }
 
-    // if(window.screen.width<=300){
-    //     document.documentElement.style.setProperty('--gx-height', '30px');
-    //     document.documentElement.style.setProperty('--gx-pdg', '40px');
-    //     document.documentElement.style.setProperty('--gx-font', '18px');
-    // }
-    // bar.style.backgroundColor="#00000073"
+    if(window.screen.width<=300){
+        document.documentElement.style.setProperty('--gx-height', '30px');
+        document.documentElement.style.setProperty('--gx-pdg', '40px');
+        document.documentElement.style.setProperty('--gx-font', '18px');
+    }
+    bar.style.backgroundColor="#00000073"
 
-    // class Orientation{
-    //     constructor(){
-    //         addEventListener("load",()=>{
-    //             this.orientation();
-    //         });
-    //         addEventListener("orientationchange",()=>{
-    //             this.orientation();
-    //         });
-    //     }
+    class Orientation{
+        constructor(){
+            addEventListener("load",()=>{
+                this.orientation();
+            });
+            addEventListener("orientationchange",()=>{
+                this.orientation();
+            });
+        }
 
-    //     orientation(){
-    //         if(screen.orientation.type =="portrait-primary" || screen.orientation.type =="portrait-secondary"  ){
-    //             orientLL=false;
-    //             if(window.screen.width>window.screen.height){
-    //                 document.documentElement.style.setProperty('--block-R', `${window.screen.width}px`);
-    //                 document.documentElement.style.setProperty('--block-L', `${-window.screen.width*0.05}px`);
-    //                 game.style.width=`${window.screen.width}px`
-    //                 gameW=window.screen.width
-    //                 game.style.height=`${window.screen.height}px`
-    //                 gameH=window.screen.height
-    //                 //block.style.height=`${window.screen.height}px`
-    //                 //blockH=window.screen.height
-    //                 block1.style.width=`${window.screen.width*0.05}px`
-    //                 block.style.width=`${window.screen.width*0.05}px`
-    //                 blockW=window.screen.width*0.05
-    //                 hole.style.width=`${window.screen.width*0.05}px`
-    //                 holeW=window.screen.width*0.05
-    //                 hole.style.height=`${window.screen.height*0.5}px`//0.4
-    //                 holeH=window.screen.height*0.5//0.25
-    //                 character.style.width=`${window.screen.width*0.1}px`//0.5
-    //                 characterW=window.screen.width*0.1
-    //                 character.style.height=`${window.screen.width*0.1}px`//0.5
-    //                 characterH=window.screen.width*0.1
-    //                 character.style.top=`${window.screen.height/2-characterH/2}px`
-    //                 character.style.left=`${window.screen.width/2-characterW/2}px`
-    //                 block.style.height=`${gameH/2-holeH/2}px`
-    //                 block1.style.height=`${gameH/2-holeH/2}px`
-    //                 block1.style.top=`${gameH/2+holeH/2}px`
-    //                 hole.style.top=`${gameH/2-holeH/2}px`
-    //                 winningMessageElement.style.width=`${gameW}px`
-    //                 winningMessageElement.style.height=`${gameH}px`
-    //             }else{
-    //             game.style.width=`${window.screen.width}px`
-    //             gameW=window.screen.width
-    //             game.style.height=`${window.screen.height}px`
-    //             gameH=window.screen.height
-    //             //block.style.height=`${window.screen.height}px`
-    //             //blockH=window.screen.height
-    //             hole.style.height=`${window.screen.height*0.5}px`//0.4
-    //             holeH=window.screen.height*0.5//0.25
-    //             character.style.width=`${window.screen.width*0.2}px`//0.05
-    //             characterW=window.screen.width*0.2//0.05
-    //             character.style.height=`${window.screen.width*0.2}px`
-    //             characterH=window.screen.width*0.2
-    //             character.style.top=`${window.screen.height/2-characterH/2}px`
-    //             character.style.left=`${window.screen.width/2-characterW/2}px`
-    //             document.documentElement.style.setProperty('--block-R', `${window.screen.width}px`);
-    //             block.style.height=`${gameH/2-holeH/2}px`
-    //             block1.style.height=`${gameH/2-holeH/2}px`
-    //             block1.style.top=`${gameH/2+holeH/2}px`
-    //             hole.style.top=`${gameH/2-holeH/2}px`
-    //             if(window.screen.width>=600){
-    //                 block.style.width=`${window.screen.width*0.08}px`
-    //                 blockW=window.screen.width*0.08
-    //                 block1.style.width=`${window.screen.width*0.08}px`
-    //                 hole.style.width=`${window.screen.width*0.08}px`
-    //                 holeW=window.screen.width*0.08
-    //                 document.documentElement.style.setProperty('--block-L', `${-window.screen.width*0.08}px`);
-    //             }else{
-    //                 block.style.width=`${window.screen.width*0.1}px`
-    //                 blockW=window.screen.width*0.1
-    //                 block1.style.width=`${window.screen.width*0.1}px`
-    //                 hole.style.width=`${window.screen.width*0.1}px`
-    //                 holeW=window.screen.width*0.1
-    //                 document.documentElement.style.setProperty('--block-L', `${-window.screen.width*0.1}px`);
-    //             }
-    //             winningMessageElement.style.width=`${gameW}px`
-    //             winningMessageElement.style.height=`${gameH}px`
-    //             }
-    //         }else if(screen.orientation.type =="landscape-primary" ||  screen.orientation.type =="landscape-landscape-secondary" ){
-    //             orientLL=true;
-    //             //if(window.screen.width>=600){
-    //                 document.documentElement.style.setProperty('--block-R', `${window.screen.width}px`);
-    //                 document.documentElement.style.setProperty('--block-L', `${-window.screen.width*0.05}px`);
-    //                 game.style.width=`${window.screen.width}px`
-    //                 gameW=window.screen.width
-    //                 game.style.height=`${window.screen.height}px`
-    //                 gameH=window.screen.height
-    //                 //block.style.height=`${window.screen.height}px`
-    //                 //blockH=window.screen.height
-    //                 block1.style.width=`${window.screen.width*0.05}px`
-    //                 block.style.width=`${window.screen.width*0.05}px`
-    //                 blockW=window.screen.width*0.05
-    //                 hole.style.width=`${window.screen.width*0.05}px`
-    //                 holeW=window.screen.width*0.05
-    //                 hole.style.height=`${window.screen.height*0.5}px`//0.25
-    //                 holeH=window.screen.height*0.5//0.25//0.4
-    //                 character.style.width=`${window.screen.width*0.1}px`//0.5
-    //                 characterW=window.screen.width*0.1
-    //                 character.style.height=`${window.screen.width*0.1}px`//0.5
-    //                 characterH=window.screen.width*0.1
-    //                 character.style.top=`${window.screen.height/2-characterH/2}px`
-    //                 character.style.left=`${window.screen.width/2-characterW/2}px`
-    //                 block.style.height=`${gameH/2-holeH/2}px`
-    //                 block1.style.height=`${gameH/2-holeH/2}px`
-    //                 block1.style.top=`${gameH/2+holeH/2}px`
-    //                 hole.style.top=`${gameH/2-holeH/2}px`
-    //                 winningMessageElement.style.width=`${gameW}px`
-    //                 winningMessageElement.style.height=`${gameH}px`
-    //         }
+        orientation(){
+            if(screen.orientation.type =="portrait-primary" || screen.orientation.type =="portrait-secondary"  ){
+                orientLL=false;
+                if(window.screen.width>window.screen.height){
+                    document.documentElement.style.setProperty('--block-R', `${window.screen.width}px`);
+                    document.documentElement.style.setProperty('--block-L', `${-window.screen.width*0.05}px`);
+                    game.style.width=`${window.screen.width}px`
+                    gameW=window.screen.width
+                    game.style.height=`${window.screen.height}px`
+                    gameH=window.screen.height
+                    //block.style.height=`${window.screen.height}px`
+                    //blockH=window.screen.height
+                    block1.style.width=`${window.screen.width*0.05}px`
+                    block.style.width=`${window.screen.width*0.05}px`
+                    blockW=window.screen.width*0.05
+                    hole.style.width=`${window.screen.width*0.05}px`
+                    holeW=window.screen.width*0.05
+                    hole.style.height=`${window.screen.height*0.5}px`//0.4
+                    holeH=window.screen.height*0.5//0.25
+                    character.style.width=`${window.screen.width*0.1}px`//0.5
+                    characterW=window.screen.width*0.1
+                    character.style.height=`${window.screen.width*0.1}px`//0.5
+                    characterH=window.screen.width*0.1
+                    character.style.top=`${window.screen.height/2-characterH/2}px`
+                    character.style.left=`${window.screen.width/2-characterW/2}px`
+                    block.style.height=`${gameH/2-holeH/2}px`
+                    block1.style.height=`${gameH/2-holeH/2}px`
+                    block1.style.top=`${gameH/2+holeH/2}px`
+                    hole.style.top=`${gameH/2-holeH/2}px`
+                    winningMessageElement.style.width=`${gameW}px`
+                    winningMessageElement.style.height=`${gameH}px`
+                }else{
+                game.style.width=`${window.screen.width}px`
+                gameW=window.screen.width
+                game.style.height=`${window.screen.height}px`
+                gameH=window.screen.height
+                //block.style.height=`${window.screen.height}px`
+                //blockH=window.screen.height
+                hole.style.height=`${window.screen.height*0.5}px`//0.4
+                holeH=window.screen.height*0.5//0.25
+                character.style.width=`${window.screen.width*0.2}px`//0.05
+                characterW=window.screen.width*0.2//0.05
+                character.style.height=`${window.screen.width*0.2}px`
+                characterH=window.screen.width*0.2
+                character.style.top=`${window.screen.height/2-characterH/2}px`
+                character.style.left=`${window.screen.width/2-characterW/2}px`
+                document.documentElement.style.setProperty('--block-R', `${window.screen.width}px`);
+                block.style.height=`${gameH/2-holeH/2}px`
+                block1.style.height=`${gameH/2-holeH/2}px`
+                block1.style.top=`${gameH/2+holeH/2}px`
+                hole.style.top=`${gameH/2-holeH/2}px`
+                if(window.screen.width>=600){
+                    block.style.width=`${window.screen.width*0.08}px`
+                    blockW=window.screen.width*0.08
+                    block1.style.width=`${window.screen.width*0.08}px`
+                    hole.style.width=`${window.screen.width*0.08}px`
+                    holeW=window.screen.width*0.08
+                    document.documentElement.style.setProperty('--block-L', `${-window.screen.width*0.08}px`);
+                }else{
+                    block.style.width=`${window.screen.width*0.1}px`
+                    blockW=window.screen.width*0.1
+                    block1.style.width=`${window.screen.width*0.1}px`
+                    hole.style.width=`${window.screen.width*0.1}px`
+                    holeW=window.screen.width*0.1
+                    document.documentElement.style.setProperty('--block-L', `${-window.screen.width*0.1}px`);
+                }
+                winningMessageElement.style.width=`${gameW}px`
+                winningMessageElement.style.height=`${gameH}px`
+                }
+            }else if(screen.orientation.type =="landscape-primary" ||  screen.orientation.type =="landscape-landscape-secondary" ){
+                orientLL=true;
+                //if(window.screen.width>=600){
+                    document.documentElement.style.setProperty('--block-R', `${window.screen.width}px`);
+                    document.documentElement.style.setProperty('--block-L', `${-window.screen.width*0.05}px`);
+                    game.style.width=`${window.screen.width}px`
+                    gameW=window.screen.width
+                    game.style.height=`${window.screen.height}px`
+                    gameH=window.screen.height
+                    //block.style.height=`${window.screen.height}px`
+                    //blockH=window.screen.height
+                    block1.style.width=`${window.screen.width*0.05}px`
+                    block.style.width=`${window.screen.width*0.05}px`
+                    blockW=window.screen.width*0.05
+                    hole.style.width=`${window.screen.width*0.05}px`
+                    holeW=window.screen.width*0.05
+                    hole.style.height=`${window.screen.height*0.5}px`//0.25
+                    holeH=window.screen.height*0.5//0.25//0.4
+                    character.style.width=`${window.screen.width*0.1}px`//0.5
+                    characterW=window.screen.width*0.1
+                    character.style.height=`${window.screen.width*0.1}px`//0.5
+                    characterH=window.screen.width*0.1
+                    character.style.top=`${window.screen.height/2-characterH/2}px`
+                    character.style.left=`${window.screen.width/2-characterW/2}px`
+                    block.style.height=`${gameH/2-holeH/2}px`
+                    block1.style.height=`${gameH/2-holeH/2}px`
+                    block1.style.top=`${gameH/2+holeH/2}px`
+                    hole.style.top=`${gameH/2-holeH/2}px`
+                    winningMessageElement.style.width=`${gameW}px`
+                    winningMessageElement.style.height=`${gameH}px`
+            }
                 
-    //     }
-    // }
-    // onload = new Orientation();
+        }
+    }
+    onload = new Orientation();
 }else{ //computer
     user="computer"
     //document.documentElement.style.setProperty('--gx-height', '45px');
@@ -188,7 +188,7 @@ if ( /android|webOS|iPhone|iPad|iPod|blackberry|IEMobile|Opera Mini|Windows Phon
 //-----------------------------------------------  other --------------------------------------------------------------------
 var cntr=0
 var vrb=true
-function Orientation(){
+function OOrientation(){
     cntr+=1
     if(window.screen.width<window.screen.height && cntr==1 ){
         vrb=true
@@ -301,7 +301,7 @@ function Orientation(){
 }
 function loopOrientation(){
     
-    Orientation();
+    OOrientation();
 
     requestAnimationFrame(loopOrientation);
 }
