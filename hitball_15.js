@@ -235,7 +235,7 @@ if ( /android|webOS|iPhone|iPad|iPod|blackberry|IEMobile|Opera Mini|Windows Phon
 //||||||||||||||||||||||||||||||||||||||||||||||||||||   other  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 var vrb000=true;
 var cntr000=0
-function Orientation(){
+function OOrientation(){
     if(windowWidth!=window.screen.width || cntr000==0 ){
         cctr+=1
     }
@@ -368,7 +368,7 @@ function Orientation(){
 
 function loopOrientation(){
     
-    Orientation();
+    OOrientation();
 
     requestAnimationFrame(loopOrientation);
 }
