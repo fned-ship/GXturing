@@ -373,6 +373,7 @@ function loopOrientation(){
     requestAnimationFrame(loopOrientation);
 }
 if(user==="other" ){// iphone and phones 
+    user="phone"
     loopOrientation();
 }
 
@@ -387,7 +388,11 @@ ylose.style.width=`${2*cvs.width/3}px`
 
 var  PADDLE_WIDTH=cvs.width/4;
 if(user!="computer"){
-    PADDLE_WIDTH=window.screen.width*0.25
+    if(window.screen.width<window.screen.height){
+        PADDLE_WIDTH=window.screen.width*0.25
+    }else{
+        PADDLE_WIDTH=window.screen.height*0.25
+    }
 }
 const PADDLE_MARGIN_BOTTOM = 30;//50   //100//30
 const PADDLE_HEIGHT = 10;//20
