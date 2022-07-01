@@ -293,6 +293,7 @@ function startGame() {
 function handleClick(e) {
     const cell = e.target
     //const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
+    if(cell.classList.contains(X_CLASS)==false &&  cell.classList.contains(CIRCLE_CLASS)==false ){
     placeMark(cell,X_CLASS)
     if (checkWin(X_CLASS)) {
         WIN.play();
@@ -332,6 +333,7 @@ function handleClick(e) {
         }else if (isDraw()) {
             endGame(true,CIRCLE_CLASS)
         }
+    }
     }
 }
 
