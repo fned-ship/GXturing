@@ -80,7 +80,7 @@ BRICK_HIT.src = "brick_hit.mp3";
 
 /////// END LOAD SOUNDS ////////
 const BARA = new Audio();
-BARA.src = "bara.mp3";
+BARA.src = "chippi.mp3";
 
 const YANO = new Audio();
-YANO.src = "yano.mp3";
+YANO.src = "wha.mp3";
